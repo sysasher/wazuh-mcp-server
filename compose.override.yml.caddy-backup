@@ -1,0 +1,26 @@
+# Backup of the Caddy reverse-proxy override, disabled 2026-09-10.
+# To restore: copy this content into compose.override.yml, then
+# `docker compose up -d`.
+#
+# Adds a Caddy reverse proxy in front of wazuh-main-server, terminating TLS
+# with a locally-trusted (self-signed) certificate so clients that require
+# HTTPS (e.g. Claude Desktop's Custom Connector) can reach this server over
+# your LAN.
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: wazuh-mcp-caddy
+    restart: unless-stopped
+    ports:
+      - "8443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - wazuh-main-server
+
+volumes:
+  caddy_data:
+  caddy_config:
