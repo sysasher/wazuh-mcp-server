@@ -1,21 +1,4 @@
-# Caddyfile — reverse proxy with a self-signed (locally-trusted) certificate.
-# Caddy generates and manages its own local CA automatically ("tls internal"),
-# so no manual openssl commands are needed. You just need to trust that CA's
-# root certificate once on this same machine (see CLAUDE_DESKTOP_LOCAL_SETUP.md
-# / the steps Claude gave you in chat).
-#
-# Same-machine setup: Claude Desktop and the MCP server are both on this box,
-# so the site address is just "localhost".
-{
-	# Global options block intentionally left empty — defaults are fine.
-}
-
-https://localhost {
+https://REPLACE_WITH_YOUR_LAN_IP_OR_HOSTNAME {
 	tls internal
-
-	# Proxies to the wazuh-main-server container over the internal Docker
-	# network — this works whether or not the server's own port is published
-	# to the host, since Compose puts every service in this project on the
-	# same default network.
 	reverse_proxy wazuh-main-server:3000
 }
