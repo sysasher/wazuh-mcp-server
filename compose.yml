@@ -37,7 +37,9 @@ services:
       # Bind to loopback by default: the server serves plain HTTP and expects a TLS-
       # terminating reverse proxy in front. Set MCP_BIND=0.0.0.0 to expose it directly
       # (only behind a trusted network/firewall).
-      - "${MCP_BIND:-127.0.0.1}:${MCP_PORT:-3000}:3000"
+      #- "${MCP_BIND:-127.0.0.1}:${MCP_PORT:-3000}:3000"
+      - "127.0.0.1:3001:3000"
+      
     
     # Modern health check with curl (follows the container's MCP_PORT, pinned to 3000 above)
     healthcheck:
